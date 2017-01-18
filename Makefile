@@ -11,20 +11,17 @@
 
 # ####################################################
 #
-STATEBUCKET = mycompany-terraform
+STATEBUCKET = terraform
 PREFIX = jenkins
 
-# # Before we start test that we have the mandatory executables available
+# Before we start test that we have the mandatory executables available
 	EXECUTABLES = git terraform
 	K := $(foreach exec,$(EXECUTABLES),\
 		$(if $(shell which $(exec)),some string,$(error "No $(exec) in PATH, consider apt-get install $(exec)")))
-#
-#     .PHONY: all s3bucket plan
-
 
 .PHONY: all plan apply
 
-all: init.txt plan
+all: plan
 	echo "All"
 
 plan:
@@ -39,9 +36,9 @@ destroy:
 	@echo running terraform destroy
 	terraform destroy
 
-# little hack target to prevent it running again without need
-# for second nested Makefile
-init.txt:
-	@echo "initialize remote state file"
-	terraform remote config -backend=s3 -backend-config="bucket=$(STATEBUCKET)" -backend-config="key=$(PREFIX)/terraform.tfstate"
-	echo "ran terraform remote config -backend=s3 -backend-config=\"bucket=$(STATEBUCKET)\" -backend-config=\"key=$(PREFIX)/terraform.tfstate\"" > ./init.txt
+# # little hack target to prevent it running again without need
+# # for second nested Makefile
+# init.txt:
+# 	@echo "initialize remote state file"
+# 	terraform remote config -backend=s3 -backend-config="bucket=$(STATEBUCKET)" -backend-config="key=$(PREFIX)/terraform.tfstate"
+# 	echo "ran terraform remote config -backend=s3 -backend-config=\"bucket=$(STATEBUCKET)\" -backend-config=\"key=$(PREFIX)/terraform.tfstate\"" > ./init.txt

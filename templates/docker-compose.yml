@@ -1,0 +1,19 @@
+traefik:
+  image: traefik
+  command: --web --docker --docker.domain=docker.localhost --logLevel=DEBUG
+  container_name: traefik
+  ports:
+    - "80:80"
+    - "8080:8080"
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+
+jenkins:
+  image: jenkins:2.32.1-alpine
+  container_name: master
+  ports:
+    - "8081:8080"
+  labels:
+    - "traefik.frontend.rule=Host:master.ci.challenge.avenuecode.com"
+    - "traefik.port=8080"
+    - "traefik.backend=master"

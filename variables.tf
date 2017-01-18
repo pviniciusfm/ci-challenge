@@ -1,19 +1,21 @@
-variable "access_key" {
-  description = "The AWS access key."
-}
-
-variable "secret_key" {
-  description = "The AWS secret key."
-}
-
 variable "region" {
   description = "The AWS region to create resources in."
   default = "us-east-1"
 }
 
+variable "vpc_id" {
+  description = "VpcID"
+  default = "vpc-3957ca5c"
+}
+
+variable "subnet_id" {
+  description = "SubnetID"
+  default = "subnet-c8a953e3"
+}
+
 variable "availability_zone" {
   description = "The availability zone"
-  default = "us-east-1b"
+  default = "us-east-1a"
 }
 
 variable "ecs_cluster_name" {
@@ -24,14 +26,14 @@ variable "ecs_cluster_name" {
 variable "amis" {
   description = "Which AMI to spawn. Defaults to the AWS ECS optimized images."
   default = {
-    us-east-1 = "ami-8f7687e2"
-    us-west-1 = "ami-bb473cdb"
-    us-west-2 = "ami-84b44de4"
-    eu-west-1 = "ami-4e6ffe3d"
-    eu-central-1 = "ami-b0cc23df"
-    ap-northeast-1 = "ami-095dbf68"
-    ap-southeast-1 = "ami-cf03d2ac"
-    ap-southeast-2 = "ami-697a540a"
+    us-east-1 = "ami-6df8fe7a"
+    us-west-1 = "ami-1eda8d7e"
+    us-west-2 = "ami-a2ca61c2"
+    eu-west-1 = "ami-ba346ec9"
+    eu-central-1 = "ami-e012d48f"
+    ap-northeast-1 = "ami-08f7956f"
+    ap-southeast-1 = "ami-f4832f97"
+    ap-southeast-2 = "ami-774b7314"
   }
 }
 
@@ -40,7 +42,7 @@ variable "instance_type" {
 }
 
 variable "key_name" {
-  default = "devops-tf"
+  default = "ci-challenge"
   description = "SSH key name in your AWS account for AWS instances."
 }
 
@@ -65,7 +67,7 @@ variable "desired_service_count" {
 }
 
 variable "s3_bucket" {
-  default = "mycompany-jenkins"
+  default = "ac-jenkins"
   description = "S3 bucket where remote state and Jenkins data will be stored."
 }
 
@@ -74,7 +76,7 @@ variable "restore_backup" {
   description = "Whether or not to restore Jenkins backup."
 }
 
-variable "jenkins_repository_url" {
-  default = "jenkins"
+variable "repository_url" {
+  default = "default"
   description = "ECR Repository for Jenkins."
 }
